@@ -5,21 +5,22 @@
 import random
 import pygame
 
+
 class Game:
     wymiany = [[6, "krolik", 1, "owca"], [2, "owca", 1, "swinia"], [3, "swinia", 1, "krowa"], [2, "krowa", 1, "kon"],
                [1, "owca", 1, "maly_pies"], [1, "krowa", 1, "duzy_pies"]]
     zwierzeta_hodowlane = ["krolik", "owca", "swinia", "krowa", "kon"]
     liczba_graczy = 4
     kolejka = [i for i in range(liczba_graczy)]
-    kontynuuj = 1
+    # kontynuuj = 1
     wybor = 1
     wygrana = 0
     gracz = kolejka[0]
 
+
 class GUI:
     okno = pygame.display.set_mode((950, 600))
     Start = pygame.Rect(400, 480, 150, 70)
-
 
 
 def rzut_koscmi(dice1: list, dice2: list) -> tuple:
@@ -61,14 +62,13 @@ def rzut_gracza(id: int, stan_gry: dict) -> dict:
 def wykonaj_ture(stan_gry: dict, kolejka: list) -> tuple:
     gracz_id = kolejka[0]
     nowy_stan = rzut_gracza(gracz_id, stan_gry)
-    nowa_kolejka = kolejka[1:] + [gracz_id]  # przesuwamy gracza na koniec
+    nowa_kolejka = kolejka[1:] + [gracz_id]
     return nowy_stan, nowa_kolejka
 
 
 def wymiana(stan_gry: dict, kolejka: list, wybor: int) -> tuple:
     gracz_id = kolejka[0]
-    nowy_stan_gry = stan_gry
-    nowy_stan_gry["gracze"] = stan_gry["gracze"][:]
+    nowy_stan_gry = stan_gry.copy()
     nowa_kolejka = kolejka[1:] + [gracz_id]
 
     if nowy_stan_gry["gracze"][gracz_id][Game.wymiany[wybor-1][1]] >= Game.wymiany[wybor-1][0]:
@@ -80,7 +80,7 @@ def wymiana(stan_gry: dict, kolejka: list, wybor: int) -> tuple:
     return nowy_stan_gry, nowa_kolejka
 
 
-def stworz_gracza(id: int) -> dict[str, int]:
+def stworz_gracza(id: int) -> dict:
     return {
     "id": id,
     "krolik": 1,
@@ -111,7 +111,7 @@ def obsluga_tury(stan_gry: dict, kolejka: list) -> tuple:
     return nowy_stan_gry, nowa_kolejka
 
 
-def czy_wygral(gracz):
+def czy_wygral(gracz) -> bool:
     return all(gracz[zwierze] >= 1 for zwierze in Game.zwierzeta_hodowlane)
 
 # while kontynuuj == 1 and wygrana == 0:
@@ -120,21 +120,21 @@ def czy_wygral(gracz):
 #     wygrana = czy_wygral(stan_gry["gracze"][id_gracza])
 #     if wygrana == 1:
 #         print(f"Gracz {id_gracza} wygrał!!!")
-#         break
+#         kontunuuj = 0
 
 
-def narysuj_text(text, kolor, x, y):
+def narysuj_text(text: str, kolor: tuple, x: int, y: int) -> None:
     font = pygame.font.SysFont(None, 32)
     surface_tekstu = font.render(text, True, kolor)
     GUI.okno.blit(surface_tekstu, (x, y))
 
 
-def narysuj_obraz(plik, x, y):
+def narysuj_obraz(plik: str, x: int, y: int) -> None:
     obraz = pygame.image.load(plik)
     GUI.okno.blit(obraz, (x, y))
 
 
-def inicjalizacja_GUI_0():
+def inicjalizacja_GUI_0() -> None:
     czarny = (0,0,0)
     GUI.okno.fill((45, 156, 80))
 
@@ -157,11 +157,12 @@ def inicjalizacja_GUI_0():
     pygame.display.update()
 
 
-def stworzGraczy(liczba_graczy):
+def stworzGraczy(liczba_graczy: int) -> list:
     gracze = [stworz_gracza(i) for i in range(liczba_graczy)]
     return gracze
 
-def GameState(liczba_graczy):
+
+def GameState(liczba_graczy: int) -> dict:
     stan_gry = {
         "gracze": stworzGraczy(liczba_graczy),
         "tura": 0
@@ -169,11 +170,10 @@ def GameState(liczba_graczy):
     return stan_gry
 
 
-def main():
+def main() -> None:
     pygame.init()
     pygame.display.set_caption("Gra Farmer")
     gra = True
-    czarny = (0, 0, 0)
     stan_GUI = 0
 
     while gra:
