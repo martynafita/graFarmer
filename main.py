@@ -20,9 +20,6 @@ class GUI:
     okno = pygame.display.set_mode((950, 600))
     Start = pygame.Rect(400, 480, 150, 70)
 
-    def initializeWindow(self):
-        pygame.init()
-        pygame.display.set_caption("Gra Farmer")
 
 
 def rzut_koscmi(dice1: list, dice2: list) -> tuple:
@@ -129,12 +126,12 @@ def czy_wygral(gracz):
 def narysuj_text(text, kolor, x, y):
     font = pygame.font.SysFont(None, 32)
     surface_tekstu = font.render(text, True, kolor)
-    Game.okno.blit(surface_tekstu, (x, y))
+    GUI.okno.blit(surface_tekstu, (x, y))
 
 
 def narysuj_obraz(plik, x, y):
     obraz = pygame.image.load(plik)
-    Game.okno.blit(obraz, (x, y))
+    GUI.okno.blit(obraz, (x, y))
 
 
 def inicjalizacja_GUI_0():
@@ -173,6 +170,8 @@ def GameState(liczba_graczy):
 
 
 def main():
+    pygame.init()
+    pygame.display.set_caption("Gra Farmer")
     gra = True
     czarny = (0, 0, 0)
     stan_GUI = 0
