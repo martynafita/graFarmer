@@ -1,6 +1,6 @@
-# superFarmer game - project
-# author: Martyna Fita
-# subject: Programming in functional languages
+# superFarmer gra - projekt
+# autor: Martyna Fita
+# przedmiot: Programming in functional languages
 
 import random
 import pygame
@@ -88,6 +88,7 @@ class GUI:
     # end screen
     BackToMenu = pygame.Rect(300, 400, 150, 70)
     Exit = pygame.Rect(500, 400, 150, 70)
+
 
 class Button:
     def __init__(self, rectangle, action, label):
@@ -304,7 +305,6 @@ def draw_multiline_text(text: str, color: tuple, x: int, y: int, max_width: int,
         else:
             line = test_line
 
-    # draw last line
     if line:
         text_surface = font.render(line, True, color)
         GUI.window.blit(text_surface, (x, y + y_offset))
@@ -343,11 +343,9 @@ def initialize_GUI_0() -> None:
     draw_text("Jak grać", GUI.black, 530, 45)
     draw_text("Informacje", GUI.black, 720, 45)
 
-    # logo in the middle
     logo = "logo.jpg"
     draw_image(logo, 362, 187)
 
-    # start
     pygame.draw.rect(GUI.window, GUI.white, GUI.Start)
     draw_text("Start", GUI.black, 445, 505)
 
