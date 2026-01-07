@@ -1,6 +1,6 @@
 # superFarmer gra - projekt
 # autor: Martyna Fita
-# przedmiot: Programming in functional languages
+# przedmiot: Programowanie w językach funkcyjnych
 
 import random
 import pygame
@@ -594,10 +594,6 @@ def main() -> None:
                 elif event.type == pygame.KEYDOWN and GUI.active_field is not None:
                     if event.key == pygame.K_BACKSPACE:
                         GUI.field_text[GUI.active_field] = GUI.field_text[GUI.active_field][:-1]
-                    elif event.key == pygame.K_RETURN:
-                        Game.Names[GUI.active_field] = GUI.field_text[
-                                                            GUI.active_field] or f"Gracz {GUI.active_field + 1}"
-                        GUI.active_field = None
                     else:
                         GUI.field_text[GUI.active_field] += event.unicode
 
